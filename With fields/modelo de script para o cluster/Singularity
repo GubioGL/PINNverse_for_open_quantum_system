@@ -1,0 +1,35 @@
+Bootstrap: docker
+From: ufscar/ubuntu_mpich:latest
+
+%help
+
+
+%files
+	./test.py  /opt
+%post 
+
+# Atualização e instalação de dependências
+apt-get update
+DEBIAN_FRONTEND=noninteractive apt install -y software-properties-common
+add-apt-repository ppa:deadsnakes/ppa
+apt install -y build-essential
+# Instalar OpenMPI e dependências
+apt install -y openmpi-bin openmpi-common openmpi-doc libopenmpi-dev
+
+# Instalar a versão mais recente do Python e dependências
+apt install -y python3.11 python3.11-distutils python3-pip
+
+# Upgrade do pip
+pip install --upgrade pip
+
+# Instalação dos pacotes necessários
+pip3 install numpy
+pip3 install qutip==4.7.1  # Instalando uma versão mais antiga do QuTiP
+pip3 install tqdm pandas
+pip3 install torch  --index-url https://download.pytorch.org/whl/cpu
+
+%runscript
+mpirun -np 1 python3 /opt/test.py
+
+%test
+[ -f /opt/test.py ] && echo "\e[31mArquivo existe!\e[0m" || echo "\e[31m\aERRO: Arquivo não existe!\e[0m"
