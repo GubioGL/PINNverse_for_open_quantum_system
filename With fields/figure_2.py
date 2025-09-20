@@ -28,7 +28,7 @@ for N in Nc_values:
         valor_real  = df['treino'].str.strip('[]').astype(float) 
         valor_previsto = df['previsto'].str.strip('[]').astype(float) 
         
-        erro_abs    = np.abs(valor_real - valor_previsto)/ np.abs(valor_real)
+        erro_abs    = (valor_real - valor_previsto)**2
         
         erro_gamma.append(erro_abs[parametros_gamma].to_numpy())
         erro_js.append(np.mean(erro_abs[parametros_J].to_numpy()))
@@ -62,12 +62,13 @@ plt.errorbar(Nc_arr, erro_gamma_Nc, yerr=yerr_g, fmt='o', color='r', capsize=8, 
 
 
 plt.yscale('log')
-plt.ylabel('MAPE')
+plt.ylabel('MSE')
 plt.xlabel('Stardard Deviation')   
 
 plt.xticks(Nc_values)
 plt.tick_params(axis='both', which='both', direction='in', length=4, width=1.5)
 plt.legend(loc='lower right', ncol=2, fontsize=20, framealpha=0.8, handletextpad=0.01, columnspacing=0.1)
 plt.tight_layout()
-plt.savefig("MAPE_vs_ruido2.png", dpi=500 )
+plt.grid(axis='y', linestyle='--', linewidth=0.5)
+plt.savefig("MSE_vs_ruido.pdf", dpi=500 )
 plt.show()

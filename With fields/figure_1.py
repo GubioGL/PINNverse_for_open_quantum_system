@@ -28,12 +28,10 @@ for N in Nc_values:
         valor_real  = df['treino'].str.strip('[]').astype(float) 
         valor_previsto = df['previsto'].str.strip('[]').astype(float) 
         
-        erro_abs    = np.abs(valor_real - valor_previsto)/ np.abs(valor_real)
+        erro_abs    = (valor_real - valor_previsto)**2#np.abs(valor_real - valor_previsto)/ np.abs(valor_real)
         
         erro_gamma.append(erro_abs[parametros_gamma].to_numpy())
         erro_js.append(np.mean(erro_abs[parametros_J].to_numpy()))
-
-        
 
     # Média, mínimo e máximo dos erros para cada parâmetro
     erro_gamma_Nc.append(np.mean(erro_gamma,0))
@@ -68,7 +66,7 @@ for idx in range(len(parametros_gamma)):
     plt.errorbar(Nc_arr, erro_gamma_Nc[:,idx], yerr=yerr_g, fmt=markers[idx], color=colors[idx], capsize=8, linewidth=2.2, label=fr'$\gamma_{{{idx+1}}}$')
     
 plt.yscale('log')
-plt.ylabel('MAPE')
+plt.ylabel('MSE')
 plt.xlabel(r'$N_c$')
 #plt.yticks( fontsize=22)
 #plt.ylim(5e-8, 20)       
@@ -77,6 +75,6 @@ plt.xticks(Nc_values, xticks_labels)
 plt.tick_params(axis='both', which='both', direction='in', length=4, width=1.5)
 plt.legend(loc='upper right', ncol=5, fontsize=20, framealpha=0.8, handletextpad=0.01, columnspacing=0.1)
 plt.tight_layout()
-
-plt.savefig("MAPE_vs_Ndatas.png", dpi=500 )
+plt.grid(axis='y', linestyle='--', linewidth=0.5)
+plt.savefig("MSE_vs_Ndata.pdf", dpi=500 )
 plt.show()
