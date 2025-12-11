@@ -9,7 +9,7 @@ import os
 from tqdm import tqdm
 ########################################### FUNCTION for run de algorithm ##################################################  
 
-def data_qubit_two_crosstalk(lista_J,dissipation,tfinal,N,O_op,device="cpu"):
+def data_qubit_two_crosstalk(lista_J,dissipation,tfinal,N,O_op,device="cuda"):
     # Operadores de Pauli para cada qubit
     IX,IY,IZ = qt.tensor(qt.qeye(2) ,qt.sigmax()),qt.tensor(qt.qeye(2),qt.sigmay() ),qt.tensor(qt.qeye(2) ,qt.sigmaz())
     XI,YI,ZI = qt.tensor(qt.sigmax(),qt.qeye(2) ),qt.tensor(qt.sigmay(),qt.qeye(2) ),qt.tensor(qt.sigmaz(),qt.qeye(2) )
@@ -115,9 +115,9 @@ def run_parallel(SEED,size_data,std):
     dissipation = [random.uniform(0,1) for _ in range(4)]
     tfinal      = 2*np.pi
     N           = 1000
-    print(f"Inicio N{size_data}_seed{SEED}_std{std}")
-    print(f"Js: {Js}")
-    print(f"dissipation: {dissipation}")
+    # print(f"Inicio N{size_data}_seed{SEED}_std{std}")
+    # print(f"Js: {Js}")
+    # print(f"dissipation: {dissipation}")
     valor_esperado_data = data_qubit_two_crosstalk(Js,dissipation,tfinal,N,O_op,)
     
     neuronio = [50,50]
@@ -127,14 +127,14 @@ def run_parallel(SEED,size_data,std):
         output_     = len(O_op),
         activation  = [tc.nn.Tanh()]*len(neuronio),
         creat_p     = True,
-        N_of_paramater= 15+4)
+        N_of_paramater= 15+4).to("cuda")
     opt  = tc.optim.Adam(X_vector.parameters(),lr = 0.001 )
     time =  tc.linspace(
             0,
             tfinal,
             N,
             dtype   = tc.float32,
-            requires_grad = True).reshape((-1, 1))
+            requires_grad = True).reshape((-1, 1)).to("cuda")
     index_data = np.random.randint(0,N,size=size_data)
     epocas  = 200000
     ########################################################
@@ -204,7 +204,8 @@ def run_parallel(SEED,size_data,std):
         'JIZ': [Js[2]],
         'JXI': [Js[3]],
         'JYI': [Js[4]],
-        'JZI': [Js[5]],}
+        'JZI': [Js[5]],
+        }
 
     parametro_previsto = {
         'gamma1': [X_vector.parametro[15].item()],
@@ -240,6 +241,17 @@ if __name__ == "__main__":
     # for size_data_index in [5,10,15,20,25,50]:
     #     run_parallel(task_id,size_data_index,std=0)
     # 
-    task_id = 15
-    size_data_index =5
+    task_id = 1
+    size_data_index =25
     run_parallel(task_id,size_data_index,std=0)      
+    
+    task_id = 1
+    size_data_index =50
+    run_parallel(task_id,size_data_index,std=0)  
+    task_id = 2
+    size_data_index =50
+    run_parallel(task_id,size_data_index,std=0)  
+
+    task_id = 3
+    size_data_index =50
+    run_parallel(task_id,size_data_index,std=0)  
