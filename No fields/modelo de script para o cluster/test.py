@@ -181,47 +181,48 @@ def run_parallel(SEED,size_data,std):
         opt.zero_grad()
         loss_i.backward()
         opt.step()  
-    ##################### FIM do treino #####################
-    parametro_treino = { # ESSA PARTE DE SALVAR OS PARAMETRO DE TREINO TA ERRADA !!!!!!!!!!!!!!
-        'gamma1': [dissipation[0]],
-        'gamma2': [dissipation[1]],
-        'gamma3': [dissipation[2]],
-        'gamma4': [dissipation[3]],
-        'JXX': [Js[0]],
-        'JXY': [Js[1]],
-        'JXZ': [Js[2]],
-        'JYX': [Js[3]],
-        'JYY': [Js[4]],
-        'JYZ': [Js[5]],
-        'JZX': [Js[6]],
-        'JZY': [Js[7]],
-        'JZZ': [Js[8]]}
+    # ##################### FIM do treino #####################
+    # parametro_treino = { # ESSA PARTE DE SALVAR OS PARAMETRO DE TREINO TA ERRADA !!!!!!!!!!!!!!
+    #     'gamma1': [dissipation[0]],
+    #     'gamma2': [dissipation[1]],
+    #     'gamma3': [dissipation[2]],
+    #     'gamma4': [dissipation[3]],
+    #     'JXX': [Js[0]],
+    #     'JXY': [Js[1]],
+    #     'JXZ': [Js[2]],
+    #     'JYX': [Js[3]],
+    #     'JYY': [Js[4]],
+    #     'JYZ': [Js[5]],
+    #     'JZX': [Js[6]],
+    #     'JZY': [Js[7]],
+    #     'JZZ': [Js[8]]}
 
-    parametro_previsto = {
-        'gamma1': [X_vector.parametro[0].item()],
-        'gamma2': [X_vector.parametro[1].item()],
-        'gamma3': [X_vector.parametro[2].item()],
-        'gamma4': [X_vector.parametro[3].item()],
-        'JXX': [X_vector.parametro[4].item()],
-        'JXY': [X_vector.parametro[5].item()],
-        'JXZ': [X_vector.parametro[6].item()],
-        'JYX': [X_vector.parametro[7].item()],
-        'JYY': [X_vector.parametro[8].item()],
-        'JYZ': [X_vector.parametro[9].item()],
-        'JZX': [X_vector.parametro[10].item()],
-        'JZY': [X_vector.parametro[11].item()],
-        'JZZ': [X_vector.parametro[12].item()]
-        }
+    # parametro_previsto = {
+    #     'gamma1': [X_vector.parametro[0].item()],
+    #     'gamma2': [X_vector.parametro[1].item()],
+    #     'gamma3': [X_vector.parametro[2].item()],
+    #     'gamma4': [X_vector.parametro[3].item()],
+    #     'JXX': [X_vector.parametro[4].item()],
+    #     'JXY': [X_vector.parametro[5].item()],
+    #     'JXZ': [X_vector.parametro[6].item()],
+    #     'JYX': [X_vector.parametro[7].item()],
+    #     'JYY': [X_vector.parametro[8].item()],
+    #     'JYZ': [X_vector.parametro[9].item()],
+    #     'JZX': [X_vector.parametro[10].item()],
+    #     'JZY': [X_vector.parametro[11].item()],
+    #     'JZZ': [X_vector.parametro[12].item()]
+    #     }
 
-    data = {'treino': parametro_treino, 'previsto': parametro_previsto}
-    df = pd.DataFrame(data)
-    df.to_csv(f"parametro_nofields_N{size_data}_seed{SEED}_std{std}.csv")
-    print(f"Finalizado N{size_data}_seed{SEED}_std{std} \n")
+    # data = {'treino': parametro_treino, 'previsto': parametro_previsto}
+    # df = pd.DataFrame(data)
+    # df.to_csv(f"parametro_nofields_N{size_data}_seed{SEED}_std{std}.csv")
+    # print(f"Finalizado N{size_data}_seed{SEED}_std{std} \n")
 
 
 if __name__ == "__main__":
     # Obter o ID da tarefa a partir da variável de ambiente
-    task_id = int(os.environ.get('SLURM_ARRAY_TASK_ID', 1))
+    #task_id = int(os.environ.get('SLURM_ARRAY_TASK_ID', 1))
+    task_id =0
     # for size_data_index in [5,10,15,20,25]:
     #     run_parallel(task_id,size_data_index,std=0)      
 

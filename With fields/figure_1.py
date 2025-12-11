@@ -21,17 +21,22 @@ erro_js_Nc_max      = []
 for N in Nc_values:
     erro_gamma  = []
     erro_js     = []
-    for i in range(5, 101):
+    for i in range(1, 101):
         
         caminho     = f"C:/Users/Gubio/CODESACE/Pinn inverse for opem quantum system/With fields/data/parametro_withfields_N{N}_seed{i}_std0.csv"
-        df          = pd.read_csv(caminho, index_col=0)
-        valor_real  = df['treino'].str.strip('[]').astype(float) 
-        valor_previsto = df['previsto'].str.strip('[]').astype(float) 
-        
-        erro_abs    = (valor_real - valor_previsto)**2#np.abs(valor_real - valor_previsto)/ np.abs(valor_real)
-        
-        erro_gamma.append(erro_abs[parametros_gamma].to_numpy())
-        erro_js.append(np.mean(erro_abs[parametros_J].to_numpy()))
+        try:
+            
+            df          = pd.read_csv(caminho, index_col=0)
+            valor_real  = df['treino'].str.strip('[]').astype(float) 
+            valor_previsto = df['previsto'].str.strip('[]').astype(float) 
+            
+            erro_abs    = (valor_real - valor_previsto)**2#np.abs(valor_real - valor_previsto)/ np.abs(valor_real)
+            
+            erro_gamma.append(erro_abs[parametros_gamma].to_numpy())
+            erro_js.append(np.mean(erro_abs[parametros_J].to_numpy()))
+        except FileNotFoundError:
+            print(f"parametro_withfields_N{N}_seed{i}_std0.csv")
+            continue
 
     # Média, mínimo e máximo dos erros para cada parâmetro
     erro_gamma_Nc.append(np.mean(erro_gamma,0))
@@ -50,7 +55,7 @@ Nc_arr = np.array(Nc_values)
 
 # Plot Js médio com traço mais espesso
 yerr_J = [np.array(erro_js_Nc) - np.array(erro_js_Nc_min), np.array(erro_js_Nc_max) - np.array(erro_js_Nc)]
-plt.errorbar(Nc_arr, erro_js_Nc, yerr=yerr_J, fmt='ks', capsize=8, label=r'$J_{mean}$', linewidth=2.2)
+plt.errorbar(Nc_arr, erro_js_Nc, yerr=yerr_J, fmt='ks', capsize=8, label=r'$J_{medio}$', linewidth=2.2)
 
 # Plot gammas individuais
 colors = ['r','g','b','m']

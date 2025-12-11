@@ -1,0 +1,5 @@
+# Ignorar arquivos 
+__pycache__/
+
+# Ignorar arquivos de configuração local
+env

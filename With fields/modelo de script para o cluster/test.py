@@ -115,7 +115,9 @@ def run_parallel(SEED,size_data,std):
     dissipation = [random.uniform(0,1) for _ in range(4)]
     tfinal      = 2*np.pi
     N           = 1000
-            
+    print(f"Inicio N{size_data}_seed{SEED}_std{std}")
+    print(f"Js: {Js}")
+    print(f"dissipation: {dissipation}")
     valor_esperado_data = data_qubit_two_crosstalk(Js,dissipation,tfinal,N,O_op,)
     
     neuronio = [50,50]
@@ -188,27 +190,27 @@ def run_parallel(SEED,size_data,std):
         'gamma2': [dissipation[1]],
         'gamma3': [dissipation[2]],
         'gamma4': [dissipation[3]],
-        'JXX': [Js[0]],
-        'JXY': [Js[1]],
+        'JXX': [Js[6]],
+        'JXY': [Js[7]],
         'JXZ': [Js[2]],
         'JYX': [Js[3]],
         'JYY': [Js[4]],
         'JYZ': [Js[5]],
         'JZX': [Js[6]],
         'JZY': [Js[7]],
-        'JZZ': [Js[8]]}
+        'JZZ': [Js[8]],
+        'JIX': [Js[0]],
+        'JIY': [Js[1]],
+        'JIZ': [Js[2]],
+        'JXI': [Js[3]],
+        'JYI': [Js[4]],
+        'JZI': [Js[5]],}
 
     parametro_previsto = {
         'gamma1': [X_vector.parametro[15].item()],
         'gamma2': [X_vector.parametro[16].item()],
         'gamma3': [X_vector.parametro[17].item()],
         'gamma4': [X_vector.parametro[18].item()],
-        'JIX': [X_vector.parametro[0].item()],
-        'JIY': [X_vector.parametro[1].item()],
-        'JIZ': [X_vector.parametro[2].item()],
-        'JXI': [X_vector.parametro[3].item()],
-        'JYI': [X_vector.parametro[4].item()],
-        'JZI': [X_vector.parametro[5].item()],
         'JXX': [X_vector.parametro[6].item()],
         'JXY': [X_vector.parametro[7].item()],
         'JXZ': [X_vector.parametro[8].item()],
@@ -217,17 +219,27 @@ def run_parallel(SEED,size_data,std):
         'JYZ': [X_vector.parametro[11].item()],
         'JZX': [X_vector.parametro[12].item()],
         'JZY': [X_vector.parametro[13].item()],
-        'JZZ': [X_vector.parametro[14].item()]
+        'JZZ': [X_vector.parametro[14].item()],
+        'JIX': [X_vector.parametro[0].item()],
+        'JIY': [X_vector.parametro[1].item()],
+        'JIZ': [X_vector.parametro[2].item()],
+        'JXI': [X_vector.parametro[3].item()],
+        'JYI': [X_vector.parametro[4].item()],
+        'JZI': [X_vector.parametro[5].item()],
         }
 
     data = {'treino': parametro_treino, 'previsto': parametro_previsto}
     df = pd.DataFrame(data)
-    df.to_csv(f"parametro_withfields_N{size_data}_seed{SEED}_std{std}.csv")
+    df.to_csv(f"TESTE_parametro_withfields_N{size_data}_seed{SEED}_std{std}.csv")
     print(f"Finalizado N{size_data}_seed{SEED}_std{std} \n")
 
 
 if __name__ == "__main__":
     # Obter o ID da tarefa a partir da variável de ambiente
-    task_id = int(os.environ.get('SLURM_ARRAY_TASK_ID', 1))
-    for size_data_index in [5,10,15,20,25,50]:
-        run_parallel(task_id,size_data_index,std=0)      
+    # task_id = int(os.environ.get('SLURM_ARRAY_TASK_ID', 1))
+    # for size_data_index in [5,10,15,20,25,50]:
+    #     run_parallel(task_id,size_data_index,std=0)
+    # 
+    task_id = 15
+    size_data_index =5
+    run_parallel(task_id,size_data_index,std=0)      
