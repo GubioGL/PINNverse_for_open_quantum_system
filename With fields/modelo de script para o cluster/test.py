@@ -136,7 +136,7 @@ def run_parallel(SEED,size_data,std):
             dtype   = tc.float32,
             requires_grad = True).reshape((-1, 1)).to("cuda")
     index_data = np.random.randint(0,N,size=size_data)
-    epocas  = 200000
+    epocas  = 0
     ########################################################
     ##################### Treino ###########################
     for _ in tqdm(range(epocas)):
@@ -190,21 +190,21 @@ def run_parallel(SEED,size_data,std):
         'gamma2': [dissipation[1]],
         'gamma3': [dissipation[2]],
         'gamma4': [dissipation[3]],
-        'JXX': [Js[6]],
-        'JXY': [Js[7]],
-        'JXZ': [Js[2]],
-        'JYX': [Js[3]],
-        'JYY': [Js[4]],
-        'JYZ': [Js[5]],
-        'JZX': [Js[6]],
-        'JZY': [Js[7]],
-        'JZZ': [Js[8]],
         'JIX': [Js[0]],
         'JIY': [Js[1]],
         'JIZ': [Js[2]],
         'JXI': [Js[3]],
         'JYI': [Js[4]],
         'JZI': [Js[5]],
+        'JXX': [Js[6]],
+        'JXY': [Js[7]],
+        'JXZ': [Js[8]],
+        'JYX': [Js[9]],
+        'JYY': [Js[10]],
+        'JYZ': [Js[11]],
+        'JZX': [Js[12]],
+        'JZY': [Js[13]],
+        'JZZ': [Js[14]],
         }
 
     parametro_previsto = {
@@ -212,6 +212,12 @@ def run_parallel(SEED,size_data,std):
         'gamma2': [X_vector.parametro[16].item()],
         'gamma3': [X_vector.parametro[17].item()],
         'gamma4': [X_vector.parametro[18].item()],
+        'JIX': [X_vector.parametro[0].item()],
+        'JIY': [X_vector.parametro[1].item()],
+        'JIZ': [X_vector.parametro[2].item()],
+        'JXI': [X_vector.parametro[3].item()],
+        'JYI': [X_vector.parametro[4].item()],
+        'JZI': [X_vector.parametro[5].item()],
         'JXX': [X_vector.parametro[6].item()],
         'JXY': [X_vector.parametro[7].item()],
         'JXZ': [X_vector.parametro[8].item()],
@@ -221,16 +227,11 @@ def run_parallel(SEED,size_data,std):
         'JZX': [X_vector.parametro[12].item()],
         'JZY': [X_vector.parametro[13].item()],
         'JZZ': [X_vector.parametro[14].item()],
-        'JIX': [X_vector.parametro[0].item()],
-        'JIY': [X_vector.parametro[1].item()],
-        'JIZ': [X_vector.parametro[2].item()],
-        'JXI': [X_vector.parametro[3].item()],
-        'JYI': [X_vector.parametro[4].item()],
-        'JZI': [X_vector.parametro[5].item()],
         }
 
     data = {'treino': parametro_treino, 'previsto': parametro_previsto}
     df = pd.DataFrame(data)
+
     df.to_csv(f"TESTE_parametro_withfields_N{size_data}_seed{SEED}_std{std}.csv")
     print(f"Finalizado N{size_data}_seed{SEED}_std{std} \n")
 
@@ -241,17 +242,21 @@ if __name__ == "__main__":
     # for size_data_index in [5,10,15,20,25,50]:
     #     run_parallel(task_id,size_data_index,std=0)
     # 
-    task_id = 1
-    size_data_index =25
-    run_parallel(task_id,size_data_index,std=0)      
+    # task_id = 1
+    # size_data_index =25
+    # run_parallel(task_id,size_data_index,std=0)      
     
-    task_id = 1
-    size_data_index =50
-    run_parallel(task_id,size_data_index,std=0)  
-    task_id = 2
-    size_data_index =50
-    run_parallel(task_id,size_data_index,std=0)  
+    # task_id = 1
+    # size_data_index =50
+    # run_parallel(task_id,size_data_index,std=0)  
+    # task_id = 2
+    # size_data_index =50
+    # run_parallel(task_id,size_data_index,std=0)  
 
-    task_id = 3
+    # task_id = 3
+    # size_data_index =50
+    # run_parallel(task_id,size_data_index,std=0)  
+
+    task_id = 4
     size_data_index =50
-    run_parallel(task_id,size_data_index,std=0)  
+    run_parallel(task_id,size_data_index,std=0) 
