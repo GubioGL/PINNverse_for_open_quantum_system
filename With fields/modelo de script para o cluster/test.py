@@ -9,7 +9,9 @@ import os
 from tqdm import tqdm
 ########################################### FUNCTION for run de algorithm ##################################################  
 
-def data_qubit_two_crosstalk(lista_J,dissipation,tfinal,N,O_op,device="cuda"):
+DEVICE =  "cuda"
+
+def data_qubit_two_crosstalk(lista_J,dissipation,tfinal,N,O_op,device=DEVICE):
     # Operadores de Pauli para cada qubit
     IX,IY,IZ = qt.tensor(qt.qeye(2) ,qt.sigmax()),qt.tensor(qt.qeye(2),qt.sigmay() ),qt.tensor(qt.qeye(2) ,qt.sigmaz())
     XI,YI,ZI = qt.tensor(qt.sigmax(),qt.qeye(2) ),qt.tensor(qt.sigmay(),qt.qeye(2) ),qt.tensor(qt.sigmaz(),qt.qeye(2) )
@@ -127,16 +129,16 @@ def run_parallel(SEED,size_data,std):
         output_     = len(O_op),
         activation  = [tc.nn.Tanh()]*len(neuronio),
         creat_p     = True,
-        N_of_paramater= 15+4).to("cuda")
+        N_of_paramater= 15+4).to(DEVICE)
     opt  = tc.optim.Adam(X_vector.parameters(),lr = 0.001 )
     time =  tc.linspace(
             0,
             tfinal,
             N,
             dtype   = tc.float32,
-            requires_grad = True).reshape((-1, 1)).to("cuda")
+            requires_grad = True).reshape((-1, 1)).to(DEVICE)
     index_data = np.random.randint(0,N,size=size_data)
-    epocas  = 0
+    epocas  = 200000
     ########################################################
     ##################### Treino ###########################
     for _ in tqdm(range(epocas)):
@@ -242,21 +244,6 @@ if __name__ == "__main__":
     # for size_data_index in [5,10,15,20,25,50]:
     #     run_parallel(task_id,size_data_index,std=0)
     # 
-    # task_id = 1
-    # size_data_index =25
-    # run_parallel(task_id,size_data_index,std=0)      
-    
-    # task_id = 1
-    # size_data_index =50
-    # run_parallel(task_id,size_data_index,std=0)  
-    # task_id = 2
-    # size_data_index =50
-    # run_parallel(task_id,size_data_index,std=0)  
-
-    # task_id = 3
-    # size_data_index =50
-    # run_parallel(task_id,size_data_index,std=0)  
-
-    task_id = 4
+    task_id = 3
     size_data_index =50
-    run_parallel(task_id,size_data_index,std=0) 
+    run_parallel(task_id,size_data_index,std=0.1) 
