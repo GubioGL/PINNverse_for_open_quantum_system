@@ -6,7 +6,6 @@ This repository contains the code and supplementary materials for the article **
 ---
 
 ## Overview
-
 <p align="center">
   <img src="No%20fields/Predic_withfields_subplots_2x2.png" alt="PINN Predictions" width="700">
 </p>
