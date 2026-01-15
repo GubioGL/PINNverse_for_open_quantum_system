@@ -11,9 +11,6 @@ This repository contains the code and supplementary materials for the article **
 This repository is organized into multiple folders, each corresponding to different quantum system configurations investigated in the article. The main structure contains:
 
 ### Root Files
-
-- **`script_test_random_parameter_generator.py`**: Utility script for generating random parameters for testing purposes.
-
 ---
 
 ### Problem-Specific Folders
