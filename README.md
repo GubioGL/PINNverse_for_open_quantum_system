@@ -3,6 +3,26 @@
 This repository contains the code and supplementary materials for the article **"Inverse Physics-informed neural networks procedure for detecting noise in open quantum systems"**.
 
 **arXiv Link:** https://arxiv.org/abs/2507.12552
+---
+
+## Overview
+
+![PINN Predictions](No%20fields/Predic_withfields_subplots.pdf)
+
+This work addresses the inverse problem of identifying noise parameters in open quantum systems using Physics-Informed Neural Networks (PINNs). The dynamics of open quantum systems are governed by the **Lindblad master equation**:
+
+$$
+\frac{d\rho}{dt} = -i[H, \rho] + \sum_k \gamma_k \left( L_k \rho L_k^\dagger - \frac{1}{2}\{L_k^\dagger L_k, \rho\} \right)
+$$
+
+where:
+- $\rho$ is the density matrix of the quantum system
+- $H$ is the Hamiltonian operator
+- $L_k$ are the Lindblad operators describing different noise channels
+- $\gamma_k$ are the decay rates (noise parameters to be estimated)
+- $[\cdot, \cdot]$ denotes the commutator and $\{\cdot, \cdot\}$ the anticommutator
+
+Our PINN approach learns to solve this equation while simultaneously estimating the unknown noise parameters $\gamma_k$ from measurement data.
 
 ---
 
