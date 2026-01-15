@@ -16,6 +16,7 @@ The repository contains dedicated folders for each quantum system problem studie
 
 #### 1. **1 qubit/**
 Contains implementations for single-qubit quantum systems.
+- **CSV data files**: `sx.csv`, `sx_new.csv`, `sy.csv`, `sz.csv` - Store expectation values of Pauli operators for comparison.
 
 #### 2. **No fields/**
 Contains implementations for quantum systems without external fields. This folder includes:
@@ -46,8 +47,6 @@ Contains implementations for quantum systems without external fields. This folde
   - **`analyzing_data.ipynb`**: Additional data analysis and statistics
   - **`data_erro_folder.ipynb`**: Error data processing and aggregation
 
-- **CSV data files**: `sx.csv`, `sx_new.csv`, `sy.csv`, `sz.csv` - Store expectation values of Pauli operators for comparison.
-
 #### 3. **With fields/**
 Contains implementations for quantum systems with external fields applied. The folder structure mirrors the **No fields/** directory:
 
@@ -65,23 +64,6 @@ Contains implementations for quantum systems with external fields applied. The f
 
 ---
 
-## Workflow Overview
-
-1. **Generate Equations**: Use `Ode_equations_generator.ipynb` to create the differential equations for your quantum system.
-
-2. **Run Simulations**: 
-   - For single runs: Use `version_pytorch.ipynb` to train the PINN and visualize results.
-   - For parallel large-scale runs: Use the scripts in `modelo de script para o cluster/` directory.
-
-3. **Analyze Results**: 
-   - Raw simulation outputs are stored in `raw_data/`
-   - Error analyses are compiled in `data_erro/`
-   - Use the analysis notebooks (`analise_dos_resultados.ipynb`, `analyzing_data.ipynb`) to process and interpret results.
-
-4. **Generate Figures**: Use the figure-specific notebooks/scripts to reproduce the visualizations from the article.
-
----
-
 ## Key Features
 
 - **Physics-Informed Neural Networks (PINNs)**: Neural network architectures that incorporate physical laws (Lindblad equations) as constraints during training.
@@ -92,24 +74,14 @@ Contains implementations for quantum systems with external fields applied. The f
 
 ---
 
-## Getting Started
-
-1. Navigate to the appropriate problem folder (`No fields/` or `With fields/`)
-2. Check `function.py` for the PINN model implementation
-3. Open `version_pytorch.ipynb` to run a sample simulation
-4. Explore the figure notebooks to see how results are visualized
-
----
-
 ## Citation
 
 If you use this code in your research, please cite our article:
 
 ```
-[Citation information to be added]
 arXiv: https://arxiv.org/abs/2507.12552
 ```
 
 ---
 
-Feel free to explore the folders to understand the implementation and experiments carried out in the context of inverse problems for open quantum systems.
+Feel free to explore the folders to understand the implementation and the experiments conducted in the context of inverse problems for open quantum systems.
