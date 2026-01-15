@@ -7,7 +7,7 @@ This repository contains the code and supplementary materials for the article **
 
 ## Overview
 
-![PINN Predictions](No%20fields/Predic_withfields_subplots.pdf)
+![PINN Predictions](No%20fields/Predic_withfields_subplots.png)
 
 This work addresses the inverse problem of identifying noise parameters in open quantum systems using Physics-Informed Neural Networks (PINNs). The dynamics of open quantum systems are governed by the **Lindblad master equation**:
 
